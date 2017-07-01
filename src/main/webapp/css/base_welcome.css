@@ -1,0 +1,239 @@
+.zan_banner{width:100%; height:auto; overflow:hidden; font-size:0;}
+.zan_banner img,.zan_banner img{width:100%;}
+.zan_pk_pos{ width:27%;position:absolute; top:25%; z-index:999;left: 36%;}
+.zan_pk{width:100%; height:auto; overflow:hidden; font-size:0; margin:0 auto;}
+.zan_pk img{width:100%;} 
+.priceattention_left{width:72%;height:auto; overflow:hidden; float:left;}
+.priceattention_price{display:block;font-size:13px;color:#4e4c4c;}
+.priceattention_price del{font-size:10px;color:#999999;}
+.priceattention_fanli{display:block;font-size:17px; font-weight:bold;color:#f53e7b;}
+.priceattention_fanli span{font-size:13px;color:#9b9b9b;font-weight:100;}
+.header_box{width:100%;background:#fff; height:auto; overflow:hidden; position:fixed; top:0; z-index:9999;}
+.header_list{width:90%;height:30px; overflow:hidden;background:#fff;padding:3% 0 0 0; float:left;}
+.header_list li{float:left;width:25%; text-align:center;}
+.header_list li a{text-decoration:none;color:#3d4245;display:block;font-size:14px; padding-bottom:14%;}
+.header_list .sp-nav-vist{color:#f53e7b;}/**border-bottom:2px solid #f53e7b;**/
+.scree_title{width:100%; height:auto;  margin:5% auto 7% auto;position:relative;}
+.scree_title_div1{color:#fff;width:20%; margin:0 auto; text-align:center; position:relative; z-index:10; background:#fe4d9e;}
+.scree_title_div2{width:100%; height:auto;border-top:1px solid #fff;margin-top:-3%;}
+.header_right{width:6%; padding:3% 0 0 0;float:right;margin-right:4%;}
+.header_right img{width:100%;}
+.ment_list{width:100%;height:auto;overflow:hidden; padding:3% 0; background:#f8f8f8; position:fixed; top:0; left:0;z-index: 10000; display:none;}
+.ment_list_head{width:90%; margin:0 auto;}
+.ment_list_head_leimu{float:left;font-size:14px; color:#3d4245;}
+.ment_list_head_img{float:right;width:7%;}
+.ment_list_head_img img{width:100%;}
+.nav_menu{width:90%;height:auto; overflow:hidden;padding:3% 0 0 0; margin:0 auto;}
+.nav_menu li{float:left;width:23%; text-align:center;margin:2% 2% 2% 0;}
+.nav_menu li a{text-decoration:none;color:#3d4245;display:block;font-size:12px; padding:8%;border-radius: 25px;border:1px solid #575757;color:#575757;}
+.nav_menu .nav-vist{color:#e62e8b;border:1px solid #e62e8b;}
+.group{width: 100%;height: auto;overflow: hidden;margin-top: 15px;}
+.group li{width: 100%;height: auto;overflow: hidden;margin-bottom:15px;}
+.group li a{ display:block;width: 100%;}
+.group li a img{width: 100%;}
+#gotop{position:fixed;right:10px;bottom:10px;width:10%; z-index:100; display:none;}
+#gotop img{width:100%;}
+.zan_position{position:absolute;bottom:2%; z-index:99; width:100%;}
+.zan_position_1{position:absolute;bottom:2%; z-index:99; width:100%;display:none;}
+.priceattention_right{width:41px; margin-top:3%;float:right; position:relative; }
+.priceattention_right_1{width:41px; margin-top:3%;float:right; position:relative;}
+.add_1{font-size:1.2em;color:#f00; font-family:"微软雅黑"; font-weight:800; text-align:center; width:100%; position:absolute; top:-50%; display:none;}
+.pk_num{ position:absolute;color:#fff;font-size:0.8em;text-align:center;top:52%; width:100%;}
+.zan_list{width:100%;}
+.zan_list li{float:left;width:48%; position:relative;}
+.zan_list li .zan_list_img{display:block;width:100%;}
+.zan_list li .zan_list_img img{width:100%;}
+.zan_list .zan_list_left{margin:0 1% 0 1%;}
+.zan_list .zan_list_right{margin:0 0 0 1%;}
+.xy_a_button{position:absolute;bottom:7%; z-index:99; width:100%;}
+
+.pk_num_z{ position:absolute;color:#fff;font-size:0.8em;text-align:center;top:5%; width:100%;line-height: 15px;}
+.xy_a_button a{display:block;background:#f53e7b;border-radius:6px;padding:3% 0; font-size:0.9em;width:70%; text-align:center;color:#fff;margin:0 auto;}
+.xr_opacity{width:100%; height:100%; background:#000;filter:alpha(opacity=40); -moz-opacity:0.4; opacity: 0.4; position:fixed; z-index:10002; left:0; top:0;}
+.inte_tank{position:fixed; top:30%; left:50%;color:#333; margin-left:-42%; z-index:10003; width:84%; background:#fff; border-radius:5px;}
+.inte_tank h2{text-align:center; font-size:0.9em;padding:3% 0;}
+.inte_pro{font-size:0.9em; padding:0 20%;}
+.button_sure{display:block; height:35px; line-height:35px; text-align:center; width:39%; background:#ff3862; border-radius:5px; margin:5% auto; color:#fff; font-size:0.9em;}
+.priceattention_right_sekuai{ background:#f00; height:34px;margin-bottom: 3px; text-align:center;}
+
+.xy_a_button1{position:absolute;bottom:7%; z-index:99; width:100%; display:none;}
+.xy_a_button1 a{display:block;background:#f53e7b;border-radius:6px;padding:3% 0; font-size:0.9em;width:70%; text-align:center;color:#fff;margin:0 auto;}
+.add_2{font-size:1.2em;color:#f00; font-family:"微软雅黑"; font-weight:800; text-align:center; width:100%; position:absolute; top:-75%; display:none;}
+
+.new_brank{width:95%; height:auto;margin:5% auto 3% auto;}
+.new_brank img{width:100%;}
+.new_brank_list{width:100%; position:relative; margin-bottom:3%;}
+.new_brank_list_a{display:block; border:1px #e5e5e5 solid; font-size:0;}
+.new_brank_list_p{border-left:1px #e5e5e5 solid;border-bottom:1px #e5e5e5 solid; height:auto; overflow:hidden; background:#fff;}
+.new_brank_list_pimg{float:left;width:20%;padding:3% 2% 0 2%;border-right:1px #e5e5e5 solid;}
+.new_brank_list_pnum{float:left;color:#000;padding:5% 0 0 3%;font-size: 0.9em;}
+.new_brank_list_pnum span{color:#f83a7a;}
+.new_brank_list_pzhe{float:right;color:#f83a7a;padding:5% 0 0 0;}
+.new_brank_list_time{position:absolute; right:-3px;top:4px; z-index:8; width:22%;}
+/* 一元购pk活动 样式兼容  */
+.qd_qx{width:100%;}
+.qd_qx a{float:left;}
+.qd_qx .button_sure1{ background:#fff;border:1px solid #cccccc;color:#666666;margin:5% 5% 7% 8%; }
+.buzhou{width:85%; height:auto; overflow:hidden; margin:0 auto;}
+.buzhou img{width:100%;}
+.inte_gz{padding:2% 5%; line-height:22px;color:#333333;}
+
+.loading_text,.loading_text1{display:none;width:100%;text-align:center;color:#fff;}
+html,body,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,input,label,textarea,p {
+	margin:0;
+	padding:0;	
+}
+article,aside,details,footer,header,nav,section {
+	display:block
+}
+em,i {
+	font-style:normal
+}
+img {
+	border:none;
+}
+ol,ul {
+	list-style:none
+}
+body {
+	font:400 14px/1.5 "微软雅黑" Arial,sans-serif;
+	color:#5e5e5e;
+	background-color:#fe4d9e;
+}
+a {
+	color:#5e5e5e;
+	text-decoration:none
+}
+#screen_wrap {
+	min-width:320px;
+	max-width:750px;
+	margin-left:auto;
+	margin-right:auto
+}
+#M_slider {
+	width:100%;
+	overflow:hidden;
+}
+#M_slider .swipe_wrap {
+	width:auto;
+	display:box;
+	display:-webkit-box;
+	display:-moz-box;
+	height:100%;
+	overflow:hidden
+}
+#M_slider .swipe_wrap div {
+	float:left;
+	width:100%;
+	height:100%;
+	position:relative
+}
+#M_slider .swipe_wrap div a {
+	display:block;
+	width:100%;
+	height:100%;
+	margin-top: 11%;
+}
+#M_slider .swipe_wrap div a img {
+	width:100%;
+	height:auto
+}
+#M_slider .swipe_indicator {
+	position:absolute;
+	bottom:4px;
+	left:50%;
+	padding:3px 1px;
+	height:9px;
+	border-radius:5px;
+	-webkit-transform:translateX(-50%)
+}
+#M_slider .swipe_indicator li {
+	float:left;
+	margin:0 5px;
+	width:4px;
+	height:4px;
+	text-indent:99em;
+	border-radius:50%;
+	background:#8c8c8c;
+	overflow:hidden
+}
+#M_slider .swipe_indicator li.active {
+	background:#fd6f9d
+}
+#homePage {
+	position:relative
+}
+#homePage .panel {
+	width:100%;
+	height:auto;
+	overflow:hidden;
+	margin-top:15px
+}
+#homePage .panel .wall_item {
+	position:relative;
+	list-style:none;
+	color:#bebebe;
+	-webkit-transform:translateZ(0);
+	border:1px #ededed solid;
+	width:100%
+}
+#homePage .panel .wall_item a {
+	height:auto;
+	width:100%;
+	display:block;
+	background:#fff;
+	padding-bottom:3px
+}
+#homePage .panel .wall_item a .img-detail {
+	position:relative;
+	width:100%;
+	overflow:hidden;
+	font-size:0;
+}
+#homePage .panel .wall_item a .img-detail img {
+	width:100%;
+	height:auto;
+	position:absolute;
+	top:0;
+	left:0
+}
+#homePage .panel .wall_item a .title-word {
+	width:100%;
+	padding:0 2px;
+	height:20px;
+	line-height:20px;
+	white-space:nowrap;
+	word-break:keep-all;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	font-size:13px;
+	color:#666666;
+}
+#homePage .panel .wall_item a .priceattention {
+	width:100%;
+	height:40px;
+	padding:0 2px;
+	font-size:12px;
+	color:#ee4566;
+	position:relative;
+}
+#item0wall {
+	padding:0 2% 0 2%
+}
+#item1wall {
+	padding:0 0 0 0
+}
+#homePage .wall_col {
+	width:47%;
+	float:left;
+}
+#homePage .wall_wrap {
+	width:100%;
+	height:auto;
+}
+#homePage .wall_wrap .wall_item {
+	position:relative;
+	list-style:none;
+	color:#bebebe;
+	margin-bottom:6px
+}

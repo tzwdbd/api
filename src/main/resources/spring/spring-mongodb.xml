@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    	http://www.springframework.org/schema/data/mongo
+        http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd"
+       default-autowire="byName">
+
+    <mongo:mongo id="mongoReq" host="${mongo.address.ip}" port="${mongo.req.address.port}">
+        <mongo:options
+                connections-per-host="${mongo.connectionsPerHost}"
+                threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+                connect-timeout="${mongo.connectTimeout}"
+                max-wait-time="${mongo.maxWaitTime}"
+                auto-connect-retry="${mongo.autoConnectRetry}"
+                socket-keep-alive="${mongo.socketKeepAlive}"
+                socket-timeout="${mongo.socketTimeout}"
+                write-number="1"
+                write-timeout="0"
+                write-fsync="false"/>
+    </mongo:mongo>
+
+    <!--  存放请求和响应-->
+    <mongo:db-factory id="mongoReqDbFactory" dbname="oversea" mongo-ref="mongoReq" username="${mongo.username}" password="${mongo.password}"/>
+
+    <bean id="mongoReqTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoReqDbFactory"/>
+    </bean>
+    
+    <bean id="apiMongoTemplete" class="com.oversea.api.mongo.ApiMongoTemplete">
+    	<constructor-arg name="mongoDbFactory" ref="mongoReqDbFactory"/>
+    </bean>
+
+    <bean id="requestStatisticsRecordDAO" class="com.oversea.api.dao.impl.RequestStatisticsRecordDAOImpl"></bean>
+
+    <bean id="logProcessResponseExecuter" class="com.oversea.api.execute.LogProcessResponseExecuter"></bean>
+    
+</beans>

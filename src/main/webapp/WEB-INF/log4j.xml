@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="PROJECT" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${oversea.api.loggingRoot}/overseaApi.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c{10}] - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="H5_CONTROLER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${oversea.api.loggingRoot}/h5.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c{10}] - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="MAIN_CONTROLER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${oversea.api.loggingRoot}/mainController.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c{10}] - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="CONSUMING_TIME" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${oversea.api.loggingRoot}/consuming_time.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c{10}] - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="OTHER" class="org.apache.log4j.DailyRollingFileAppender">
+            <param name="file" value="${oversea.api.loggingRoot}/other.log" />
+            <param name="append" value="true" />
+            <param name="encoding" value="UTF-8" />
+            <layout class="org.apache.log4j.PatternLayout">
+                    <param name="ConversionPattern" value="%d %p [%c{10}] - %m%n" />
+            </layout>
+    </appender>
+
+
+ 	<logger name="H5_CONTROLER" additivity="false">
+	    <level value="${oversea.api.loggingLevel}" />
+	    <appender-ref ref="H5_CONTROLER" />
+    </logger>
+
+    <logger name="com.oversea.api" additivity="false">
+            <level value="${oversea.api.loggingLevel}" />
+            <appender-ref ref="PROJECT" />
+    </logger>
+    
+    <logger name="EMAYSDK" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="OTHER" />
+    </logger>
+    
+    <logger name="MAIN_CONTROLER" additivity="false">
+	    <level value="${oversea.api.loggingLevel}" />
+	    <appender-ref ref="MAIN_CONTROLER" />
+    </logger>
+    
+    <logger name="CONSUMING_TIME" additivity="false">
+	    <level value="${oversea.api.loggingLevel}" />
+	    <appender-ref ref="CONSUMING_TIME" />
+    </logger>
+    
+	<root>
+		<level value="${oversea.api.loggingLevel}" />
+		<appender-ref ref="OTHER" />
+	</root>
+</log4j:configuration>

@@ -1,0 +1,75 @@
+html{background:#f3f3f3;}
+body,p,ul{font:normal 100% "微软雅黑" Helvetica, Arial, sans-serif; padding:0px; margin:0px;}
+img{width:100%; border:0;}
+h1,h2{margin:0;}
+.max_width{min-width:320px;max-width:750px;}
+.max_width .mt5{margin-top:5%;}
+.max_width .mt3{margin-top:3%;}
+.w33{width:33%;}
+.w25{width:25%;}
+.red{color:#f53e7b;}
+.fs0{font-size:0;}
+
+/*尺码对照表*/
+.ht_nav{list-style-type:none; height:20px; line-height:20px; padding:6px 0; position:fixed; top:0; left:0; width:100%; background:#fff;}
+.ht_nav .on{color:#f53e7b; border-bottom:#f53e7b solid 1px;}
+.ht_nav li{float:left; width:10%; margin:0 5%; text-align:center; color:#5d5d5d; font-size:0.87em;}
+.ht_title{margin-top:3%; padding:0 0 2% 3%; overflow:hidden; color:#212121; border-bottom:#212121 solid 2px;}
+.title_img{float:left; width:7%; font-size:0;}
+.title_text{font-size:0.81em; float:left; margin:3px 0 0 5px;}
+.ht_h35{height:35px; line-height:35px; float:left;}
+.w33 .w42{width:42%; margin:0 auto; height:35px;}
+.w25 .w42{width:55%; margin:0 auto; height:35px;}
+.ht_h35 .s1{float:left; font-size:0;}
+.ht_h35 .s1 img{width:13px; height:35px;}
+.ht_h35 .s2{float:left; color:#212121; font-size:0.81em; margin-left:5px;}
+.ht_size_list{height:30px; line-height:30px; text-align:center; color:#9e9e9e; background:#f8f8f8; margin-top:1px;}
+.ht_size_list span{float:left; font-size:0.75em;}
+.ht_cm_left{float:left; display:block; width:25%; background:#f8f8f8; margin:1px 1px 0 0; color:#9e9e9e; font-size:0.75em; text-align:center;}
+.ht_cm_right{float:left; width:74%;}
+.cm_list{overflow:hidden;}
+.list_f{display:none;}
+/*用户协议*/
+.ht_yhxy_w{padding:3%; line-height:23px;}
+.ht_yhxy_w .h1{color:#212121; font-size:0.81em;}
+.ht_yhxy_w .h2{color:#212121; font-size:0.81em; margin-top:5%;}
+.ht_yhxy_w .ht_p{color:#5d5d5d; font-size:0.81em; line-height:22px;}
+.ht_yhxy_w .ht_p1{color:#212121; font-size:0.81em; }
+/*服务条款*/
+.fw_title{color:#5d5d5d; font-size:0.75em; padding:3%;}
+.fw_q{height:40px; line-height:40px; border-bottom:#e0e0e0 solid 1px; background:#fff; padding:0 3%; color:#212121; font-size:0.81em;}
+.fw_q span{float:left;}
+.fw_q img{width:10px; height:40px; float:right;}
+.fw_a{padding:3%;}
+.fw_a .p1{color:#212121; font-size:0.81em;}
+.fw_a .p2{color:#5d5d5d; font-size:0.75em; line-height:22px; margin-top:1%;}
+.question{display:none;}
+.question_list{list-style-type:none;}
+/*物流说明*/
+.wl_p1{overflow:hidden; text-align:center; color:#212121;}
+.wl_p1 .wl_p1_list,.wl_p2 .wl_p1_list{float:left; font-size:0.81em; width:33%; padding:4% 0; margin-left:1px;}
+.wl_p1 .wl_p1_list{background:#ededed;}
+.wl_p2 .wl_p1_list{background:#f8f8f8;}
+.wl_p2{overflow:hidden; text-align:center; color:#5d5d5d; margin-top:1px;}
+.wl_p3{margin:3%; color:#5d5d5d; font-size:0.75em; line-height:20px;}
+/*专题*/
+.zt_rel{position:relative;}
+.zt_banner{font-size:0; display:block;}
+.zt_op{position:absolute; bottom:0; left:0; font-size:0;}
+.zt_rel_text{position:absolute; bottom:4%; left:0; z-index:1; width:100%; font-weight:bold; text-align:center; color:#fff; font-size:1.06em;}
+.zt_content{padding:0 3% 3% 3%;}
+.zt_content_p1{color:#424242; font-size:0.81em; line-height:20px; border-bottom:#e0e0e0 solid 1px; padding-bottom:4%; margin:3%;}
+.zt_content_p2{overflow:hidden; border-bottom:#212121 solid 2px; padding-bottom:6px; margin-top:4%;}
+.zt_content_p2 .s1{float:left; padding:0 2%; background:#212121; text-align:center; color:#fff; font-size:0.93em;}
+.zt_content_p2 .s2{float:left; color:#212121; font-size:0.93em; font-weight:bold; margin-left:2%;}
+.zt_content_p3{color:#424242; font-size:0.81em; line-height:20px; margin-top:2%;} 
+.zt_content_p4{border:#eee solid 1px; font-size:0; margin-top:1%;}
+.zt_content_p5{overflow:hidden; margin-top:2%; border-bottom:#e0e0e0 solid 1px; padding-bottom:3%;}
+.zt_content_p5 .s1{font-size:1.06em; float:left; margin-top:2%;}
+.zt_content_p5 a{float:right; width:31%; background:#f53e7b; padding:2% 0; color:#fff; font-size:0.87em; text-decoration:none; text-align:center; border-radius:5px;}
+/*服务承诺*/
+.cn_width{margin-bottom:4%;}
+.cn_width .p1{padding:3% 3% 0 3%;}
+.cn_width .p1 .s1{color:#f53e7b; font-size:1.06em;}
+.cn_width .p1 .s2{color:#9e9e9e; font-size:0.75em;}
+.cn_width .p2{color:#5d5d5d; font-size:0.75em; padding:1% 3% 0 3%; line-height:21px;}

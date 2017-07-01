@@ -1,0 +1,27 @@
+body,p,ul{font:normal 100% "微软雅黑" Helvetica, Arial, sans-serif; padding:0px; margin:0px;}
+.max_width{min-width:320px;max-width:750px;}
+a{text-decoration:none;}
+.w100{width:100%;}
+.ht-pre{color:#5d5d5d; text-indent:2em; margin:0.234375rem 0.3125rem; line-height:0.546875rem;}
+.top-banner{margin:0.3125rem 0.15625rem 0; font-size:0;}
+.goods-list.noBottomMenu{margin-bottom:0rem; padding-bottom: 0.3rem;}
+.goods-list{list-style-type:none; margin-top:0.15625rem;margin-bottom:1.30rem; overflow:hidden; padding-bottom:0.546875rem;}
+.goods-list li{float:left; margin:0 0 0.15625rem 0.15625rem; width:4.703125rem; border: #d7d7d7 solid 1px;}
+.goods-img{width:4.75rem; height:4.75rem; display:table-cell; vertical-align:middle; text-align:center; font-size:0;line-height: 0px;}
+.goods-img img{max-width:4.35rem; max-height:4.35rem}
+.goods-name{color:#5d5d5d; margin:0 0.234375rem 0.125rem 0.234375rem;  height:0.9rem; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; line-height:0.45rem;}
+.goods-go{height:0.96875rem; line-height:0.96875rem; padding:0 0.15625rem}
+.goods-go .s1{float:left; color:#f53e7b;}
+.goods-go .s2{float:right; width:1.46875rem; height:0.6875rem; line-height:0.6875rem; text-align:center; color:#fff; background:#f53e7b; border-radius:3px; margin-top:0.140625rem;}
+
+[data-dpr="1"] .fontSize11{font-size:11px;}
+[data-dpr="1"] .fontSize12{font-size:12px;}
+[data-dpr="1"] .fontSize14{font-size:17px;}
+
+[data-dpr="2"] .fontSize11{font-size:22px;}
+[data-dpr="2"] .fontSize12{font-size:24px;}
+[data-dpr="2"] .fontSize14{font-size:34px;}
+
+[data-dpr="3"] .fontSize11{font-size:33px;}
+[data-dpr="3"] .fontSize12{font-size:36px;}
+[data-dpr="3"] .fontSize14{font-size:51px;}
