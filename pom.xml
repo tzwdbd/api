@@ -4,18 +4,18 @@
   <artifactId>oversea-api-webapp</artifactId>
   <version>1.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  
-	<repositories>
-		<repository>
-			<id>repo</id>
-			<url>http://122.225.114.30:8081/artifactory/repo</url>
-			<snapshots>
-				 <enabled>true</enabled>
-				 <updatePolicy>always</updatePolicy>
-			</snapshots>
-		</repository>
-	</repositories>
-	
+
+    <repositories>
+        <repository>
+            <id>repo</id>
+            <url>http://122.225.114.28:8085/artifactory/libs-release</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+    
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework.version>3.2.6.RELEASE</org.springframework.version>
