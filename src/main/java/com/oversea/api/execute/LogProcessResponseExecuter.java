@@ -5,8 +5,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedTransferQueue;
+import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
@@ -43,8 +44,18 @@ public class LogProcessResponseExecuter {
     private static Map<Long,RequestStatisticsRecord> logMap=new HashMap<Long,RequestStatisticsRecord>();
 
     private static final Log log = LogFactory.getLog(LogProcessResponseExecuter.class);
+    
+    private final static Integer QUEUE_MAX = 50000;
 
-    private static ThreadPoolExecutor executorService = new ThreadPoolExecutor(20, 20, Long.MAX_VALUE, TimeUnit.NANOSECONDS,new LinkedTransferQueue<Runnable>(), Executors.defaultThreadFactory());
+    private static ThreadPoolExecutor executorService = new ThreadPoolExecutor(20, 20, Long.MAX_VALUE, TimeUnit.NANOSECONDS,
+    		new ArrayBlockingQueue<Runnable>(QUEUE_MAX),
+    		Executors.defaultThreadFactory(),
+    		new RejectedExecutionHandler() {
+				@Override
+				public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+					log.error("LogProcessResponseExecuter rejectedExecution, queue_size=" + QUEUE_MAX);
+				}
+			});
 
     public void log(RequestBaseParams requestParams, ResponseBaseParams responseParams) throws OverseaException {
         long s_time = System.currentTimeMillis();
