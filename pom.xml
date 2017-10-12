@@ -27,7 +27,7 @@
 		<dependency>
 		  <groupId>oversea</groupId>
 		  <artifactId>oversea-common</artifactId>
-		  <version>common-probation-20171012-01-SNAPSHOT</version>
+		  <version>common-probation-20171012-02-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
