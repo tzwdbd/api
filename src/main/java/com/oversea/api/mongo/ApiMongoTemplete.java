@@ -21,6 +21,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.oversea.api.mongo.shard.YYYYMMDDDateShardStrategy;
+import com.oversea.common.enums.SmsPriority;
+import com.oversea.common.util.EmaySmsSendUtil;
 
 public class ApiMongoTemplete extends MongoTemplate {
 	
@@ -105,6 +107,11 @@ public class ApiMongoTemplete extends MongoTemplate {
 			getDb().getStats();
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			int status = EmaySmsSendUtil.sendNoticeSms("13858109986", "mongodb启动异常",
+					SmsPriority.ERROR.getValue(), 0L);
+			if (status != 0) {
+				logger.error("发送");
+			}
 		}
 	}
 }
