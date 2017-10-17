@@ -47,10 +47,6 @@ public class ApiConstant {
 	public static final String METHOD_CREDIT_PAYMENT = "ht.path.creditPayment";
 	
 	public static final String METHOD_GET_GROUP_GOODS_ORDER_BY_ORDER_ID = "ht.ginza.getGroupGoodsOrderByOrderId";
-	
-    public final static String MONGO_PARAM="MONGO_PARAM";
-    
-    public final static String MONGO_START="MONGO_START";
 
 	public static final Set<String> clientBlackSet = new HashSet<String>() {
 		private static final long serialVersionUID = -5635290572188267290L;
