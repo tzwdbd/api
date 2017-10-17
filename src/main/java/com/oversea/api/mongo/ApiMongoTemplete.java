@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.data.authentication.UserCredentials;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -19,9 +23,16 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.oversea.api.mongo.shard.YYYYMMDDDateShardStrategy;
+import com.oversea.api.util.ApiConstant;
+import com.oversea.common.cache.Cache;
 
 public class ApiMongoTemplete extends MongoTemplate {
-
+	
+	private static Log logger = LogFactory.getLog(ApiMongoTemplete.class);
+	
+	@Resource
+	private Cache jvmCache;
+	
 	/**
 	 * Constructor used for a basic template configuration
 	 * 
@@ -92,6 +103,16 @@ public class ApiMongoTemplete extends MongoTemplate {
 
 		for (Map.Entry<String, List<T>> entry : objs.entrySet()) {
 			doInsertBatch(entry.getKey(), entry.getValue(), super.getConverter());
+		}
+	}
+	
+	//启动的时候查看mongodb状态是否正常
+	public void init(){
+		try {
+			getDb().getStats();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			jvmCache.put(ApiConstant.MONGO_PARAM, ApiConstant.MONGO_PARAM, 0, false);
 		}
 	}
 }
