@@ -124,6 +124,7 @@ public class ApiMongoTemplete extends MongoTemplate {
                 }
             }
             if("1".equals(alert)){
+    			logger.error("mongodb启动异常~13858109986");
     			EmaySmsSendUtil.sendNoticeSms("13858109986", "mongodb启动异常",
     					SmsPriority.ERROR.getValue(), 0L);
             }
