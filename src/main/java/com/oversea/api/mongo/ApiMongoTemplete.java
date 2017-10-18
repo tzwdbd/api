@@ -104,7 +104,7 @@ public class ApiMongoTemplete extends MongoTemplate {
 	//启动的时候查看mongodb状态是否正常
 	public void init(){
 		try {
-			getDb().getStats();		
+			getDb();		
 		} catch (Exception e) {
 		    logger.error("ApiMongoTemplete111111111"+getDb().getName());
 			logger.error(e.getMessage()+getDb().getMongo().getAddress(), e);
