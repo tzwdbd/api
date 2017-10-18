@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.authentication.UserCredentials;
@@ -21,13 +23,19 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.oversea.api.mongo.shard.YYYYMMDDDateShardStrategy;
+import com.oversea.api.util.ApiConstant;
+import com.oversea.common.domain.Resources;
 import com.oversea.common.enums.SmsPriority;
+import com.oversea.common.manager.ResourcesManager;
 import com.oversea.common.util.EmaySmsSendUtil;
+import com.oversea.common.util.StringUtil;
 
 public class ApiMongoTemplete extends MongoTemplate {
 	
 	private static Log logger = LogFactory.getLog(ApiMongoTemplete.class);
 	
+	@Resource
+	private ResourcesManager resourcesManager;
 	/**
 	 * Constructor used for a basic template configuration
 	 * 
@@ -106,13 +114,19 @@ public class ApiMongoTemplete extends MongoTemplate {
 		try {
 			getDb();		
 		} catch (Exception e) {
-		    //logger.error("ApiMongoTemplete111111111"+getDb().getName());
-			//logger.error(e.getMessage()+getDb().getMongo().getAddress(), e);
-			int status = EmaySmsSendUtil.sendNoticeSms("13858109986", "mongodb启动异常",
-					SmsPriority.ERROR.getValue(), 0L);
-			if (status != 0) {
-				logger.error("发送");
-			}
+			logger.error("mongodb启动异常~", e);
+        	Map<String, Resources> paraMap = resourcesManager.getSaleResourceByMap(ApiConstant.SYS_ERROR_ALERT);
+        	String alert="0";
+            if(paraMap!=null&&paraMap.size()>0){
+            	Resources resources = paraMap.get(ApiConstant.SYS_ERROR_MONGO_ALERT);
+                if(resources!=null&&!StringUtil.isBlank(resources.getResValue())){
+                   alert=resources.getResValue();
+                }
+            }
+            if("1".equals(alert)){
+    			EmaySmsSendUtil.sendNoticeSms("13858109986", "mongodb启动异常",
+    					SmsPriority.ERROR.getValue(), 0L);
+            }
 		}
 	}
 }
