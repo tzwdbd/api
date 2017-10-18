@@ -45,7 +45,7 @@ public class LogProcessResponseExecuter {
 
     private static final Log log = LogFactory.getLog(LogProcessResponseExecuter.class);
     
-    private final static Integer QUEUE_MAX = 50000;
+    private final static Integer QUEUE_MAX = 20000;
 
     private static ThreadPoolExecutor executorService = new ThreadPoolExecutor(20, 20, Long.MAX_VALUE, TimeUnit.NANOSECONDS,
     		new ArrayBlockingQueue<Runnable>(QUEUE_MAX),
