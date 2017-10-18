@@ -106,7 +106,7 @@ public class ApiMongoTemplete extends MongoTemplate {
 	//启动的时候查看mongodb状态是否正常
 	public void init(){
 		try {
-			getDb();		
+			//getDb();		
 		} catch (Exception e) {
 			logger.error("mongodb启动异常~", e);
 			EmaySmsSendUtil.sendNoticeSms("13858109986,18606521817", "mongodb启动异常",
