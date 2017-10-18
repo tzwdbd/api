@@ -48,8 +48,8 @@ public class ApiConstant {
 	
 	public static final String METHOD_GET_GROUP_GOODS_ORDER_BY_ORDER_ID = "ht.ginza.getGroupGoodsOrderByOrderId";
 
-	public static final String SYS_ERROR_ALERT = "SYS_ERROR_ALERT";
-	public static final String SYS_ERROR_MONGO_ALERT = "SYS_ERROR_MONGO_ALERT";
+	//public static final String SYS_ERROR_ALERT = "SYS_ERROR_ALERT";
+	//public static final String SYS_ERROR_MONGO_ALERT = "SYS_ERROR_MONGO_ALERT";
 
 
 	public static final Set<String> clientBlackSet = new HashSet<String>() {
