@@ -106,7 +106,7 @@ public class ApiMongoTemplete extends MongoTemplate {
 		try {
 			getDb().getStats();		
 		} catch (Exception e) {
-		    logger.error(getDb().getMongo().getAddress());
+		    logger.error("ApiMongoTemplete====="+getDb().getMongo().getAddress());
 			logger.error(e.getMessage()+getDb().getMongo().getAddress(), e);
 			int status = EmaySmsSendUtil.sendNoticeSms("13858109986", "mongodb启动异常",
 					SmsPriority.ERROR.getValue(), 0L);
