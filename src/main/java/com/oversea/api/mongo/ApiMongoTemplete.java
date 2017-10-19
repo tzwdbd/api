@@ -109,8 +109,8 @@ public class ApiMongoTemplete extends MongoTemplate {
 			getDb();		
 		} catch (Exception e) {
 			logger.error("mongodb启动异常~", e);
-			EmaySmsSendUtil.sendNoticeSms("13858109986,18606521817", "mongodb启动异常",
-					SmsPriority.ERROR.getValue(), 0L);
+			//EmaySmsSendUtil.sendNoticeSms("13858109986,18606521817", "mongodb启动异常",
+					//SmsPriority.ERROR.getValue(), 0L);
 		}
 	}
 }
