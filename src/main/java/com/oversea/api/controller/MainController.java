@@ -159,7 +159,7 @@ public class MainController {
                 	}
                 	
                 	if(!blackList.contains(operationRequest.getMethod())) {
-                		//logProcessResponseExecuter.log(operationRequest, operationResponse);
+                	    logProcessResponseExecuter.log(operationRequest, operationResponse);
                 	}
                 	
                     // step8 将回写内容转换成json格式
