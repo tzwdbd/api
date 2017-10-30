@@ -33,8 +33,8 @@ public class AutoManWWW {
 	private static String password = "dev@)#)";
 	//请根据自己的项目的实际情况做替换              
 	private static String locatin_project = "/Users/xuzhizheng/Documents/githaihuspace/oversea-common/";
-	private static String tableName = "editor_recommend";
-	private static String domainName = "EditorRecommend";
+	private static String tableName = "bundle_goods_sell";
+	private static String domainName = "BundleGoodsSell";
 	private static String primaryKey = "id";//小写
 	private static String prefix="";
 	
@@ -43,14 +43,14 @@ public class AutoManWWW {
 //	/Users/ouburi/workspace/java/luna/commons_2.2/src/main/java/com/nvshen/common/domain/AccessUrl.java
 	//下面这些不用替换
 	private static String location_sqlmaps = "src/main/resources/sqlmaps/";
-	private static String locaton_domain   = "src/main/java/com/oversea/common/domain/config/";
+	private static String locaton_domain   = "src/main/java/com/oversea/common/domain/goods/";
 	
-	private static String location_dao = "src/main/java/com/oversea/common/dao/configuration/";
-	private static String location_dao_impl = "src/main/java/com/oversea/common/dao/configuration/impl/";
+	private static String location_dao = "src/main/java/com/oversea/common/dao/goods/";
+	private static String location_dao_impl = "src/main/java/com/oversea/common/dao/goods/impl/";
 
-	private static String package_domain = "com.oversea.common.domain.config"+(prefix.length()>0?("."+prefix):"");
-	private static String package_dao = "com.oversea.common.dao.configuration."+(prefix.length()>0?("."+prefix):"");
-	private static String package_dao_impl = "com.oversea.dao.configuration."+(prefix.length()>0?(prefix+"."):"")+"impl";
+	private static String package_domain = "com.oversea.common.domain.goods"+(prefix.length()>0?("."+prefix):"");
+	private static String package_dao = "com.oversea.common.dao.goods."+(prefix.length()>0?("."+prefix):"");
+	private static String package_dao_impl = "com.oversea.dao.goods."+(prefix.length()>0?(prefix+"."):"")+"impl";
 
 	public static void main(String args[]) throws FileNotFoundException, SQLException, IOException,
 			ClassNotFoundException, InstantiationException, IllegalAccessException {
