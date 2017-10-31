@@ -68,8 +68,9 @@ public class MainController {
 
             // step1 解析参数
             Map<String, String> params = controlAider.paramterDecoder(request);
-            if(params==null){
-            	log.error("MainController process  method "+request.getParameterMap()+"====>request method "+request.getHeader("method_api")+"====> test "+request.getHeader("User-Agent"));
+            if(params==null||params.size()==0){
+               log.error("MainController process  method "+request.getParameterMap()+"====>request method "+request.getHeader("method_api")+"====> test "+request.getHeader("User-Agent"));
+               return;
             }
             requestData = params.get("requestData");
             sign = params.get("sign");
@@ -158,7 +159,7 @@ public class MainController {
                 	}
                 	
                 	if(!blackList.contains(operationRequest.getMethod())) {
-                		logProcessResponseExecuter.log(operationRequest, operationResponse);
+                	    logProcessResponseExecuter.log(operationRequest, operationResponse);
                 	}
                 	
                     // step8 将回写内容转换成json格式

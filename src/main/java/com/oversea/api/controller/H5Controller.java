@@ -163,12 +163,13 @@ public class H5Controller {
                 	}
                 	
                 	if(whiteList.contains(operationRequest.getMethod())) {
-                		logProcessResponseExecuter.log(operationRequest, operationResponse);
+                	   logProcessResponseExecuter.log(operationRequest, operationResponse);
                 	}
                 	
                     // step8 将回写内容转换成json格式
                     resultJson = controlAider.createResultJson(operationResponse);
-                    response.setContentType("text/html; charset=UTF-8");
+                    //response.setContentType("text/html; charset=UTF-8");
+                    response.setContentType("application/json; charset=UTF-8");
                     //允许跨域
                     response.setHeader("Access-Control-Allow-Origin", "*");
                     
