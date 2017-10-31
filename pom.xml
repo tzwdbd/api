@@ -27,7 +27,7 @@
 		<dependency>
 		  <groupId>oversea</groupId>
 		  <artifactId>oversea-common</artifactId>
-		  <version>common-tonglian-20171031-15</version>
+		  <version>common-tonglian-20171101-01</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
