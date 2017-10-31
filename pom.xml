@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>oversea</groupId>
   <artifactId>oversea-api-webapp</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>api-develop-SNAPSHOT</version>
   <packaging>war</packaging>
 
     <repositories>
@@ -27,7 +27,7 @@
 		<dependency>
 		  <groupId>oversea</groupId>
 		  <artifactId>oversea-common</artifactId>
-		  <version>common-sheny-20171025-SNAPSHOT</version>
+		  <version>common-develop-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
