@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>oversea</groupId>
   <artifactId>oversea-api-webapp</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>api-develop-SNAPSHOT</version>
   <packaging>war</packaging>
 
     <repositories>
@@ -123,11 +123,7 @@
 		    <artifactId>activemq-pool</artifactId>
 		    <version>5.9.0</version>
 		</dependency>
-		<dependency>
-			<groupId>org.simplecaptcha</groupId>
-			<artifactId>simplecaptcha</artifactId>
-			<version>1.2</version>
-		</dependency>
+		
 	</dependencies>
   
   <build>
