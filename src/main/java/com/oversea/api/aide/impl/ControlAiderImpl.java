@@ -594,7 +594,7 @@ public class ControlAiderImpl implements ControlAider {
 			List<String> video = new ArrayList<String>();
 			List<String> img = new ArrayList<String>();
 			List<String> text = new ArrayList<String>();
-
+			
 			// 设置内存缓冲区，超过后写入临时文件
 			factory.setSizeThreshold(10240);
 			// 创建文件夹
@@ -615,6 +615,7 @@ public class ControlAiderImpl implements ControlAider {
 			    log.error("error in saveFile method",e);
 			    return files;
 			}
+			
 			FileItem item = null;
 			for (int i = 0; i < items.size(); i++) {
 			    item = (FileItem) items.get(i);
@@ -631,7 +632,7 @@ public class ControlAiderImpl implements ControlAider {
 			    //后面跟的是原始文件名
 			    relPath = filePath + File.separator + DateUtil.ymdFormat(new Date()) + UUID.randomUUID().toString() +item.getName();
 			    
-			    log.error("isFormField=" + item.isFormField() + ",fileType=" + fileType + ",name=" + item.getName() + ",size=" + item.getSize() + ",relPath=" + relPath);
+			    log.error("isFormField=" + item.isFormField() + ",fileType=" + fileType + ",name=" + item.getName() + ",size=" + item.getSize() + ",relPath=" + relPath+",inMemory="+item.isInMemory());
 			    
 			    // 保存文件
 			    if (!item.isFormField() && item.getName().length() > 0 && item.getSize() > 0) {
