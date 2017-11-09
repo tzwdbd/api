@@ -100,9 +100,7 @@ public class MainController {
             operationResponse = systemOperationExecuter.execute(operationType, operationRequest);
 
             //ste5 清除文件
-            if(!ApiConstant.METHOD_UPLOAD_PHOTO.equals(operationRequest.getMethod())){
-            	controlAider.clearFiles(operationRequest);
-            }
+            controlAider.clearFiles(operationRequest);
             
             // step6 补充返回信息(写入公共参数)
             operationResponse = controlAider.appendRequestBaseParams(operationRequest, operationResponse);
