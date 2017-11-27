@@ -102,15 +102,4 @@ public class ApiMongoTemplete extends MongoTemplate {
 			doInsertBatch(entry.getKey(), entry.getValue(), super.getConverter());
 		}
 	}
-	
-	//启动的时候查看mongodb状态是否正常
-	public void init(){
-		try {
-			//getDb();		
-		} catch (Exception e) {
-			logger.error("mongodb启动异常~", e);
-			EmaySmsSendUtil.sendNoticeSms("13858109986", "mongodb启动异常",
-					SmsPriority.ERROR.getValue(), 0L);
-		}
-	}
 }
