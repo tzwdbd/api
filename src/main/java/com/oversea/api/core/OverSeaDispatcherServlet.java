@@ -40,7 +40,7 @@ public class OverSeaDispatcherServlet extends DispatcherServlet{
                 }catch(Exception e){}
             }
         }
-        System.out.println("contextConfigLocation:"+remotetype);
+        //System.out.println("contextConfigLocation:"+remotetype);
         super.init(config);
     };
     

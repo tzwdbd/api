@@ -7,7 +7,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.authentication.UserCredentials;
@@ -20,9 +22,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.oversea.api.mongo.shard.YYYYMMDDDateShardStrategy;
-import com.oversea.common.enums.SmsPriority;
 import com.oversea.common.manager.ResourcesManager;
-import com.oversea.common.util.EmaySmsSendUtil;
 
 public class ApiMongoTemplete extends MongoTemplate {
 	

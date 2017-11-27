@@ -29,7 +29,7 @@
         <constructor-arg name="mongoDbFactory" ref="mongoReqDbFactory"/>
     </bean>
     
-    <bean id="apiMongoTemplete" class="com.oversea.api.mongo.ApiMongoTemplete" init-method="init">
+    <bean id="apiMongoTemplete" class="com.oversea.api.mongo.ApiMongoTemplete">
     	<constructor-arg name="mongoDbFactory" ref="mongoReqDbFactory"/>
     </bean>
 
