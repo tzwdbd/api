@@ -2,7 +2,6 @@ package com.oversea.api.controller;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -18,12 +17,9 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.oversea.api.aide.ControlAider;
 import com.oversea.api.core.SystemOperationExecuter;
 import com.oversea.api.exception.RequestProcessInterruptException;
-import com.oversea.api.execute.LogProcessResponseExecuter;
-import com.oversea.api.util.ApiConstant;
-import com.oversea.common.domain.Resources;
+import com.oversea.api.execute.HbaseLogExecuter;
 import com.oversea.common.exception.OverseaException;
 import com.oversea.common.exception.ProcessStatusCode;
-import com.oversea.common.manager.ResourcesManager;
 import com.oversea.common.request.RequestBaseParams;
 import com.oversea.common.response.ResponseBaseParams;
 import com.oversea.common.util.JSONUtil;
@@ -36,15 +32,10 @@ public class MainController {
 
     @Resource
     private SystemOperationExecuter systemOperationExecuter;
-
-    @Resource
-    private LogProcessResponseExecuter logProcessResponseExecuter;
-
     @Resource
     private ControlAider controlAider;
-    
     @Resource
-    private ResourcesManager resourcesManager;
+    private HbaseLogExecuter hbaseLogExecuter;
 
     /**手机客户端
      * @param request
@@ -147,18 +138,9 @@ public class MainController {
         }
         try {
             try {
-                if (operationRequest != null) {
+                if(operationRequest != null) {
                     // 记录操作日志
-                	Set<String> blackList = ApiConstant.clientBlackSet;
-                	Map<String, Resources> map = resourcesManager.getSaleResourceByMap("clientBlackList");
-                	
-                	if(map.size() > 0) {
-                		blackList = map.keySet();
-                	}
-                	
-                	if(!blackList.contains(operationRequest.getMethod())) {
-                	    logProcessResponseExecuter.log(operationRequest, operationResponse);
-                	}
+                	hbaseLogExecuter.log(HbaseLogExecuter.FROM_MAIN, operationRequest, operationResponse);
                 	
                     // step8 将回写内容转换成json格式
                     resultJson = controlAider.createResultJson(operationResponse);
@@ -174,6 +156,5 @@ public class MainController {
         } catch (Exception e) {
             log.error("给客户端返回请求是发生异常:", e);
         }
-
     }
 }

@@ -1,8 +1,5 @@
 package com.oversea.api.util;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class ApiConstant {
 	
 	//目前mongo测试环境开放mongo
@@ -47,55 +44,4 @@ public class ApiConstant {
 	public static final String METHOD_CREDIT_PAYMENT = "ht.path.creditPayment";
 	
 	public static final String METHOD_GET_GROUP_GOODS_ORDER_BY_ORDER_ID = "ht.ginza.getGroupGoodsOrderByOrderId";
-
-	//public static final String SYS_ERROR_ALERT = "SYS_ERROR_ALERT";
-	//public static final String SYS_ERROR_MONGO_ALERT = "SYS_ERROR_MONGO_ALERT";
-
-
-	public static final Set<String> clientBlackSet = new HashSet<String>() {
-		private static final long serialVersionUID = -5635290572188267290L;
-		{
-			add(METHOD_GET_PIC_SUFFIX);
-			add(METHOD_CRAZY_SALE);
-			add(METHOD_FOX_FIND_COUPON);
-		}
-	};
-	
-	public static final Set<String> h5WhiteSet = new HashSet<String>() {
-		private static final long serialVersionUID = -7411728383793329737L;
-		{
-			add(METHOD_SETTLE_ACCOUNTS);
-			add(METHOD_PAYMENT2);
-			add(METHOD_PAYMENT);
-			add(METHOD_PAYMENT_WAP);
-			add(METHOD_GO_APP_PAY);
-			
-			add(METHOD_GROUP_CASHIER);
-			add(METHOD_GROUP_PAY);
-			add(METHOD_GROUP_WAP_PAY_SIGN);
-			add(METHOD_GROUP_PAY_SIGN);
-			
-			add(METHOD_TROLLEYS);
-			add(METHOD_REMOVE_FROM_SHOPPING_CART);
-			add(METHOD_SELECT_TROLLEY);
-			add(METHOD_SYNC_TROLLEY);
-			
-			add(METHOD_RECEIVE_COUPON);
-			
-			add(METHOD_MASTER_EXTEND_BIND);
-			add(METHOD_GET_GROUP_GOODS_BY_GOODS_ID);
-			
-			add(METHOD_SIGN_IN_DETAILS);
-			add(METHOD_SIGN_IN);
-			add(METHOD_CREDIT_EXCHANGE);
-			add(METHOD_SHARE_SUCCESS);
-			add(METHOD_DOWN_APP_SAVE_URL);
-			add(METHOD_MORE_CONVERSION);
-			add(METHOD_CREDIT_GOODS_DETAIL);
-			add(METHOD_CREDIT_SETTLE);
-			add(METHOD_CREDIT_PAYMENT);
-			
-			add(METHOD_GET_GROUP_GOODS_ORDER_BY_ORDER_ID);
-		}
-	};
 }

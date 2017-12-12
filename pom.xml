@@ -25,9 +25,19 @@
 	
 	<dependencies>
 		<dependency>
-		  <groupId>oversea</groupId>
-		  <artifactId>oversea-common</artifactId>
-		  <version>common-dubbo-20171205-07</version>
+		  	<groupId>oversea</groupId>
+		  	<artifactId>oversea-common</artifactId>
+		  	<version>common-hbase-20171208-13-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-client</artifactId>
+			<version>1.2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.8</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
