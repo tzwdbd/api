@@ -31,7 +31,7 @@ import com.oversea.common.response.ResponseBaseParams;
 import com.oversea.common.util.DateUtil;
 import com.oversea.common.util.StringUtil;
 
-public class HbaseLogExecuter {
+public class HbaseLogExecuter implements LogExecuter {
 	
 	private static Logger logger = LoggerFactory.getLogger(HbaseLogExecuter.class);
 	
@@ -64,6 +64,7 @@ public class HbaseLogExecuter {
 	private TableName TABLE;
 	private Table table;
 	
+	@Override
 	public void init() {
 		config = HBaseConfiguration.create();
 		config.set("hbase.zookeeper.quorum", zkQuorum);
@@ -86,6 +87,7 @@ public class HbaseLogExecuter {
 		logger.error("HbaseLogExecuter init");
 	}
 	
+	@Override
 	public void close() {
 		try {
 			table.close();
@@ -97,6 +99,7 @@ public class HbaseLogExecuter {
 		logger.error("HbaseLogExecuter close");
 	}
 	
+	@Override
 	public void log(String from, RequestBaseParams requestParams, ResponseBaseParams responseParams) {
 		Map<String, Resources> resMap = resourcesManager.getSaleResourceByMap(ResourcesType.HBASE_API_USER_LOG_TYPE.getName());
 		Resources switchRes = resMap.get(ResourcesType.HBASE_API_USER_LOG_SWITCH.getName());
