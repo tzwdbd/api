@@ -1,12 +1,8 @@
 package com.oversea.api.execute;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import javax.annotation.Resource;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
@@ -23,15 +19,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
-import com.oversea.common.domain.Resources;
-import com.oversea.common.enums.ResourcesType;
-import com.oversea.common.manager.ResourcesManager;
 import com.oversea.common.request.RequestBaseParams;
 import com.oversea.common.response.ResponseBaseParams;
 import com.oversea.common.util.DateUtil;
 import com.oversea.common.util.StringUtil;
 
-public class HbaseLogExecuter {
+public class HbaseLogExecuter implements LogExecuter {
 	
 	private static Logger logger = LoggerFactory.getLogger(HbaseLogExecuter.class);
 	
@@ -52,8 +45,8 @@ public class HbaseLogExecuter {
 	private static final String RESP_STATUS = "-999";
 	private static final String USER_ID_NO_LOGIN = "XXXXXXXX";
 	
-	private static final String LOG_SWITCH_OFF = "off";
-	private static final String LOG_MODE_BLACK = "black";
+	public static final String LOG_SWITCH_OFF = "off";
+	public static final String LOG_MODE_BLACK = "black";
 	
 	public static final String FROM_MAIN = "service";
 	public static final String FROM_H5 = "h5";
@@ -64,6 +57,7 @@ public class HbaseLogExecuter {
 	private TableName TABLE;
 	private Table table;
 	
+	@Override
 	public void init() {
 		config = HBaseConfiguration.create();
 		config.set("hbase.zookeeper.quorum", zkQuorum);
@@ -86,6 +80,7 @@ public class HbaseLogExecuter {
 		logger.error("HbaseLogExecuter init");
 	}
 	
+	@Override
 	public void close() {
 		try {
 			table.close();
@@ -97,6 +92,7 @@ public class HbaseLogExecuter {
 		logger.error("HbaseLogExecuter close");
 	}
 	
+	@Override
 	public void log(String from, RequestBaseParams requestParams, ResponseBaseParams responseParams) {
 		/*Map<String, Resources> resMap = resourcesManager.getSaleResourceByMap(ResourcesType.HBASE_API_USER_LOG_TYPE.getName());
 		Resources switchRes = resMap.get(ResourcesType.HBASE_API_USER_LOG_SWITCH.getName());
