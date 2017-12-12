@@ -45,7 +45,6 @@ public class HbaseLogExecuter {
 	private String hbaseRetryNum;
 	private String hbasePause;
 	
-	private static TableName TABLE;
 	private static final String PLATFORM = "plat";
 	private static final String REQ = "req";
 	private static final String RESP = "resp";
@@ -62,6 +61,7 @@ public class HbaseLogExecuter {
 	private ExecutorService executor;
 	private Configuration config;
 	private Connection conn;
+	private TableName TABLE;
 	private Table table;
 	
 	public void init() {

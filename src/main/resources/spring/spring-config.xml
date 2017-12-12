@@ -41,13 +41,4 @@
     	p:proxyTargetClass="true"></bean>
     	
    	<bean id="springObjectFactory" class="com.oversea.common.core.SpringObjectFactory"></bean>
-   	
-   	<bean id="hbaseLogExecuter" class="com.oversea.api.execute.HbaseLogExecuter" init-method="init" destroy-method="close">
-   		<property name="tableName" value="${hbase.api.log.tableName}" />
-		<property name="zkQuorum" value="${hbase.api.log.zkQuorum}" />
-		<property name="zkPort" value="${hbase.api.log.zkPort}" />
-		<property name="zkRetry" value="${hbase.api.log.zkRetry}" />
-		<property name="hbaseRetryNum" value="${hbase.api.log.hbaseRetryNum}" />
-		<property name="hbasePause" value="${hbase.api.log.hbasePause}" />
-   	</bean>
 </beans>
