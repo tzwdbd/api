@@ -38,12 +38,12 @@ public class HbaseLogExecuter {
 	@Resource
     private ResourcesManager resourcesManager;
 	
-	private String tableName = "api_user_log_test";
-	private String zkQuorum = "122.225.114.27";
-	private String zkPort = "2222";
-	private String zkRetry = "1";
-	private String hbaseRetryNum = "3";
-	private String hbasePause = "1000";
+	private String tableName;
+	private String zkQuorum;
+	private String zkPort;
+	private String zkRetry;
+	private String hbaseRetryNum;
+	private String hbasePause;
 	
 	private static TableName TABLE;
 	private static final String PLATFORM = "plat";
