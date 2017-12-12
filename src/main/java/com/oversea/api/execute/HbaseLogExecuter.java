@@ -35,8 +35,8 @@ public class HbaseLogExecuter implements LogExecuter {
 	
 	private static Logger logger = LoggerFactory.getLogger(HbaseLogExecuter.class);
 	
-	@Resource
-    private ResourcesManager resourcesManager;
+	// @Resource
+    // private ResourcesManager resourcesManager;
 	
 	private String tableName;
 	private String zkQuorum;
@@ -101,13 +101,13 @@ public class HbaseLogExecuter implements LogExecuter {
 	
 	@Override
 	public void log(String from, RequestBaseParams requestParams, ResponseBaseParams responseParams) {
-		Map<String, Resources> resMap = resourcesManager.getSaleResourceByMap(ResourcesType.HBASE_API_USER_LOG_TYPE.getName());
+		/*Map<String, Resources> resMap = resourcesManager.getSaleResourceByMap(ResourcesType.HBASE_API_USER_LOG_TYPE.getName());
 		Resources switchRes = resMap.get(ResourcesType.HBASE_API_USER_LOG_SWITCH.getName());
 		
 		if(switchRes != null && LOG_SWITCH_OFF.equalsIgnoreCase(switchRes.getResValue())) {
 			logger.error("HbaseLogExecuter_log: log off");
 			return;
-		}
+		}*/
 		
 		if(StringUtil.isBlank(from)) {
 			logger.error("HbaseLogExecuter_log: from is null");
@@ -129,7 +129,7 @@ public class HbaseLogExecuter implements LogExecuter {
 		
 		logger.info("HbaseLogExecuter_log: from={}, method={}, userId={}", from, method, userId);
 		
-		Resources modeRes = resMap.get(ResourcesType.HBASE_API_USER_LOG_MODE.getName());
+		/*Resources modeRes = resMap.get(ResourcesType.HBASE_API_USER_LOG_MODE.getName());
 		String logMode = modeRes == null ? LOG_MODE_BLACK : modeRes.getResValue();
 		
 		if(LOG_MODE_BLACK.equals(logMode)) { // 黑名单
@@ -158,7 +158,7 @@ public class HbaseLogExecuter implements LogExecuter {
 			if(!logFlag) {
 				return;
 			}
-		}
+		}*/
 		
 		try {
 			if(conn == null || conn.isAborted() || conn.isClosed()) {
