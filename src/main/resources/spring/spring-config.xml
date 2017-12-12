@@ -13,8 +13,8 @@
     http://www.springframework.org/schema/context/spring-context-3.2.xsd
     http://www.springframework.org/schema/aop
     http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-        	http://www.springframework.org/schema/data/mongo
-        http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd"
+    http://www.springframework.org/schema/data/mongo
+    http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd"
     default-autowire="byName">
     
     <context:annotation-config/>
@@ -35,10 +35,21 @@
 	
 	<!-- 执行时间logger拦截器 -->
 	<bean id="executorOperationLogerInterceptor" class="com.oversea.api.core.ExecutorOperationLogerInterceptor"></bean>
+	
     <bean id="overseaOperationExecuter" class="org.springframework.aop.framework.ProxyFactoryBean" 
     	p:interceptorNames="executorOperationLogerInterceptor" 
     	p:target-ref="systemOperationExecuter"
-    	p:proxyTargetClass="true"></bean>
+    	p:proxyTargetClass="true">
+    </bean>
     	
    	<bean id="springObjectFactory" class="com.oversea.common.core.SpringObjectFactory"></bean>
+   	
+   	<bean id="hbaseLogExecuter" class="com.oversea.api.execute.HbaseLogExecuter" init-method="init" destroy-method="close">
+   		<property name="tableName" value="${hbase.api.log.tableName}" />
+		<property name="zkQuorum" value="${hbase.api.log.zkQuorum}" />
+		<property name="zkPort" value="${hbase.api.log.zkPort}" />
+		<property name="zkRetry" value="${hbase.api.log.zkRetry}" />
+		<property name="hbaseRetryNum" value="${hbase.api.log.hbaseRetryNum}" />
+		<property name="hbasePause" value="${hbase.api.log.hbasePause}" />
+   	</bean>
 </beans>

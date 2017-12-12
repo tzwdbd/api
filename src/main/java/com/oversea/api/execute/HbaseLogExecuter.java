@@ -31,7 +31,7 @@ import com.oversea.common.response.ResponseBaseParams;
 import com.oversea.common.util.DateUtil;
 import com.oversea.common.util.StringUtil;
 
-public class HbaseLogExecuter implements LogExecuter {
+public class HbaseLogExecuter {
 	
 	private static Logger logger = LoggerFactory.getLogger(HbaseLogExecuter.class);
 	
@@ -64,7 +64,6 @@ public class HbaseLogExecuter implements LogExecuter {
 	private TableName TABLE;
 	private Table table;
 	
-	@Override
 	public void init() {
 		config = HBaseConfiguration.create();
 		config.set("hbase.zookeeper.quorum", zkQuorum);
@@ -87,7 +86,6 @@ public class HbaseLogExecuter implements LogExecuter {
 		logger.error("HbaseLogExecuter init");
 	}
 	
-	@Override
 	public void close() {
 		try {
 			table.close();
@@ -99,7 +97,6 @@ public class HbaseLogExecuter implements LogExecuter {
 		logger.error("HbaseLogExecuter close");
 	}
 	
-	@Override
 	public void log(String from, RequestBaseParams requestParams, ResponseBaseParams responseParams) {
 		/*Map<String, Resources> resMap = resourcesManager.getSaleResourceByMap(ResourcesType.HBASE_API_USER_LOG_TYPE.getName());
 		Resources switchRes = resMap.get(ResourcesType.HBASE_API_USER_LOG_SWITCH.getName());
@@ -225,11 +222,14 @@ public class HbaseLogExecuter implements LogExecuter {
 	        	userIdKey = USER_ID_NO_LOGIN;
 	        } else {
 	        	StringBuffer userIdSb = new StringBuffer(String.valueOf(userId));
+	        	userIdSb.reverse();
 	        	
-	        	if(userIdSb.length() == 7) {
-	        		userIdSb.reverse().append("X");
-	        	} else if(userIdSb.length() == 6) {
-	        		userIdSb.reverse().append("XX");
+	        	int len = userIdSb.length();
+	        	
+	        	if(len < 8) {
+	        		for(int i=0; i<8-len; i++) {
+	        			userIdSb.append("X");
+	        		}
 	        	}
 	        	
 	        	userIdKey = userIdSb.toString();
