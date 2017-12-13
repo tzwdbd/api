@@ -10,8 +10,6 @@ import javax.annotation.Resource;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.HColumnDescriptor;
-import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
@@ -174,16 +172,8 @@ public class HbaseLogExecuter implements LogExecuter {
 			}
 			
 			if(!hBaseAdmin.tableExists(TABLE)) {
-				HTableDescriptor tableDescriptor = new HTableDescriptor(TABLE);
-				HColumnDescriptor family1 = new HColumnDescriptor(PLATFORM);
-				HColumnDescriptor family2 = new HColumnDescriptor(REQ);
-				HColumnDescriptor family3 = new HColumnDescriptor(RESP);
-				HColumnDescriptor family4 = new HColumnDescriptor(STATUS);
-				tableDescriptor.addFamily(family1);
-				tableDescriptor.addFamily(family2);
-				tableDescriptor.addFamily(family3);
-				tableDescriptor.addFamily(family4);
-				hBaseAdmin.createTable(tableDescriptor);
+				logger.error("HbaseLogExecuter_log: table not exist, from={}, method={}, userId={}", from, method, userId);
+				return;
 			}
 			
 	        String rowKey = getRowKey(userId, method);
