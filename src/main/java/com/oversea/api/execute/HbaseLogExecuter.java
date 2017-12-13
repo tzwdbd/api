@@ -99,66 +99,66 @@ public class HbaseLogExecuter implements LogExecuter {
 	
 	@Override
 	public void log(String from, RequestBaseParams requestParams, ResponseBaseParams responseParams) {
-		Map<String, Resources> resMap = resourcesManager.getSaleResourceByMap(ResourcesType.HBASE_API_USER_LOG_TYPE.getName());
-		Resources switchRes = resMap.get(ResourcesType.HBASE_API_USER_LOG_SWITCH.getName());
-		
-		if(switchRes != null && LOG_SWITCH_OFF.equalsIgnoreCase(switchRes.getResValue())) {
-			logger.error("HbaseLogExecuter_log: log off");
-			return;
-		}
-		
-		if(StringUtil.isBlank(from)) {
-			logger.error("HbaseLogExecuter_log: from is null");
-			return;
-		}
-		
-		if(requestParams == null) {
-			logger.error("HbaseLogExecuter_log: requestParams is null, from={}", from);
-			return;
-		}
-		
-		String method = requestParams.getMethod();
-		Long userId = requestParams.getUser_id();
-		
-		if(StringUtil.isBlank(method)) {
-			logger.error("HbaseLogExecuter_log: method is null, from={}", from);
-			return;
-		}
-		
-		logger.info("HbaseLogExecuter_log: from={}, method={}, userId={}", from, method, userId);
-		
-		Resources modeRes = resMap.get(ResourcesType.HBASE_API_USER_LOG_MODE.getName());
-		String logMode = modeRes == null ? LOG_MODE_BLACK : modeRes.getResValue();
-		
-		if(LOG_MODE_BLACK.equals(logMode)) { // 黑名单
-			List<Resources> blackList = resourcesManager.getSaleResourceByType(ResourcesType.HBASE_API_USER_LOG_MODE_BLACK_TYPE.getName());
+		try {
+			Map<String, Resources> resMap = resourcesManager.getSaleResourceByMap(ResourcesType.HBASE_API_USER_LOG_TYPE.getName());
+			Resources switchRes = resMap.get(ResourcesType.HBASE_API_USER_LOG_SWITCH.getName());
 			
-			if(blackList != null && blackList.size() > 0) {
-				for(Resources res : blackList) {
-					if(method.equals(res.getResValue())) {
-						return;
-					}
-				}
-			}
-		} else { // 白名单
-			boolean logFlag = false;
-			List<Resources> whiteList = resourcesManager.getSaleResourceByType(ResourcesType.HBASE_API_USER_LOG_MODE_WHITE_TYPE.getName());
-			
-			if(whiteList != null && whiteList.size() > 0) {
-				for(Resources res : whiteList) {
-					if(method.equals(res.getResValue())) {
-						logFlag = true;
-						break;
-					}
-				}
-			}
-			
-			if(!logFlag) {
+			if(switchRes != null && LOG_SWITCH_OFF.equalsIgnoreCase(switchRes.getResValue())) {
+				logger.error("HbaseLogExecuter_log: log off");
 				return;
 			}
-		}
-		
-		try {
+			
+			if(StringUtil.isBlank(from)) {
+				logger.error("HbaseLogExecuter_log: from is null");
+				return;
+			}
+			
+			if(requestParams == null) {
+				logger.error("HbaseLogExecuter_log: requestParams is null, from={}", from);
+				return;
+			}
+			
+			String method = requestParams.getMethod();
+			Long userId = requestParams.getUser_id();
+			
+			if(StringUtil.isBlank(method)) {
+				logger.error("HbaseLogExecuter_log: method is null, from={}", from);
+				return;
+			}
+			
+			logger.info("HbaseLogExecuter_log: from={}, method={}, userId={}", from, method, userId);
+			
+			Resources modeRes = resMap.get(ResourcesType.HBASE_API_USER_LOG_MODE.getName());
+			String logMode = modeRes == null ? LOG_MODE_BLACK : modeRes.getResValue();
+			
+			if(LOG_MODE_BLACK.equals(logMode)) { // 黑名单
+				List<Resources> blackList = resourcesManager.getSaleResourceByType(ResourcesType.HBASE_API_USER_LOG_MODE_BLACK_TYPE.getName());
+				
+				if(blackList != null && blackList.size() > 0) {
+					for(Resources res : blackList) {
+						if(method.equals(res.getResValue())) {
+							return;
+						}
+					}
+				}
+			} else { // 白名单
+				boolean logFlag = false;
+				List<Resources> whiteList = resourcesManager.getSaleResourceByType(ResourcesType.HBASE_API_USER_LOG_MODE_WHITE_TYPE.getName());
+				
+				if(whiteList != null && whiteList.size() > 0) {
+					for(Resources res : whiteList) {
+						if(method.equals(res.getResValue())) {
+							logFlag = true;
+							break;
+						}
+					}
+				}
+				
+				if(!logFlag) {
+					return;
+				}
+			}
+			
 			if(conn == null || conn.isAborted() || conn.isClosed()) {
 				logger.error("HbaseLogExecuter_log: conn is null or closed, from={}, method={}, userId={}", from, method, userId);
 				return;
