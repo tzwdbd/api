@@ -3,17 +3,14 @@ package com.oversea.api.execute;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.client.Connection;
-import org.apache.hadoop.hbase.client.ConnectionFactory;
-import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
@@ -29,19 +26,20 @@ import com.oversea.common.response.ResponseBaseParams;
 import com.oversea.common.util.DateUtil;
 import com.oversea.common.util.StringUtil;
 
-public class HbaseLogExecuter implements LogExecuter {
+public class HbaseLogExecuter {
 	
 	private static Logger logger = LoggerFactory.getLogger(HbaseLogExecuter.class);
 	
 	@Resource
+	private HbaseUtil hbaseUtil;
+	@Resource
     private ResourcesManager resourcesManager;
 	
-	private String tableName;
-	private String zkQuorum;
-	private String zkPort;
-	private String zkRetry;
-	private String hbaseRetryNum;
-	private String hbasePause;
+	private static ExecutorService logExecutor = new ThreadPoolExecutor(5, 10, 60L,
+    		TimeUnit.SECONDS,
+    		new ArrayBlockingQueue<Runnable>(20000),
+    		Executors.defaultThreadFactory(),
+    		new ThreadPoolExecutor.DiscardOldestPolicy());
 	
 	private static final String PLATFORM = "plat";
 	private static final String REQ = "req";
@@ -56,49 +54,26 @@ public class HbaseLogExecuter implements LogExecuter {
 	public static final String FROM_MAIN = "service";
 	public static final String FROM_H5 = "h5";
 	
-	private ExecutorService executor;
-	private Configuration config;
-	private Connection conn;
-	private TableName TABLE;
-	private Table table;
+	private String tableName;
 	
-	@Override
-	public void init() {
-		config = HBaseConfiguration.create();
-		config.set("hbase.zookeeper.quorum", zkQuorum);
-		config.set("hbase.zookeeper.property.clientPort", zkPort);
-		config.set("hbase.client.retries.number", hbaseRetryNum);
-		config.set("hbase.client.pause", hbasePause);
-		config.set("zookeeper.recovery.retry", zkRetry);
-		
-		executor = Executors.newFixedThreadPool(5);
-		
-		TABLE = TableName.valueOf(tableName);
-		
+	public void log(final String from, final RequestBaseParams requestParams, final ResponseBaseParams responseParams) {
 		try {
-			conn = ConnectionFactory.createConnection(config, executor);
-			table = conn.getTable(TABLE);
-		} catch (Exception e) {
-			logger.error("HbaseLogExecuter_createConnection_error: ", e);
-		}
-		
-		logger.error("HbaseLogExecuter init");
+			logExecutor.submit(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                    	put(from, requestParams, responseParams);
+                    } catch (Exception e) {
+                        logger.error("HbaseLogExecuter_log_submit_error", e);
+                    }
+                }
+            });
+        } catch (Exception e) {
+        	logger.error("HbaseLogExecuter_log_error: ", e);
+        }
 	}
 	
-	@Override
-	public void close() {
-		try {
-			table.close();
-			conn.close();
-		} catch (Exception e) {
-			logger.error("HbaseLogExecuter_close_error: ", e);
-		}
-	
-		logger.error("HbaseLogExecuter close");
-	}
-	
-	@Override
-	public void log(String from, RequestBaseParams requestParams, ResponseBaseParams responseParams) {
+	private void put(String from, RequestBaseParams requestParams, ResponseBaseParams responseParams) {
 		try {
 			Map<String, Resources> resMap = resourcesManager.getSaleResourceByMap(ResourcesType.HBASE_API_USER_LOG_TYPE.getName());
 			Resources switchRes = resMap.get(ResourcesType.HBASE_API_USER_LOG_SWITCH.getName());
@@ -159,47 +134,34 @@ public class HbaseLogExecuter implements LogExecuter {
 				}
 			}
 			
-			if(conn == null || conn.isAborted() || conn.isClosed()) {
-				logger.error("HbaseLogExecuter_log: conn is null or closed, from={}, method={}, userId={}", from, method, userId);
-				return;
-			}
+			Table table = hbaseUtil.getTable(tableName);
 			
-			HBaseAdmin hBaseAdmin = (HBaseAdmin) conn.getAdmin();
-			
-			if(hBaseAdmin == null) {
-				logger.error("HbaseLogExecuter_log: hBaseAdmin is null, from={}, method={}, userId={}", from, method, userId);
-				return;
-			}
-			
-			if(!hBaseAdmin.tableExists(TABLE)) {
-				logger.error("HbaseLogExecuter_log: table not exist, from={}, method={}, userId={}", from, method, userId);
-				return;
-			}
-			
-	        String rowKey = getRowKey(userId, method);
-			Put put = new Put(rowKey.getBytes());
-			
-			String platform = requestParams.getProduct_id();
-			
-			if(StringUtil.isNotBlank(platform)) {
-				put.addColumn(Bytes.toBytes(PLATFORM), null, Bytes.toBytes(platform));
-			}
-			
-			put.addColumn(Bytes.toBytes(REQ), null, Bytes.toBytes(JSON.toJSONString(requestParams)));
-			
-			String respStatus = null;
-			
-			if(responseParams != null) {
-				put.addColumn(Bytes.toBytes(RESP), null, Bytes.toBytes(JSON.toJSONString(responseParams)));
+			if(table != null) {
+				String rowKey = getRowKey(userId, method);
+				Put put = new Put(rowKey.getBytes());
 				
-				if(responseParams.getResponsePublicParams() != null) {
-					respStatus = responseParams.getResponsePublicParams().getStatus();
+				String platform = requestParams.getProduct_id();
+				
+				if(StringUtil.isNotBlank(platform)) {
+					put.addColumn(Bytes.toBytes(PLATFORM), null, Bytes.toBytes(platform));
 				}
+				
+				put.addColumn(Bytes.toBytes(REQ), null, Bytes.toBytes(JSON.toJSONString(requestParams)));
+				
+				String respStatus = null;
+				
+				if(responseParams != null) {
+					put.addColumn(Bytes.toBytes(RESP), null, Bytes.toBytes(JSON.toJSONString(responseParams)));
+					
+					if(responseParams.getResponsePublicParams() != null) {
+						respStatus = responseParams.getResponsePublicParams().getStatus();
+					}
+				}
+				
+				put.addColumn(Bytes.toBytes(STATUS), null, Bytes.toBytes(StringUtil.isBlank(respStatus) ? RESP_STATUS : respStatus));
+				
+				table.put(put);
 			}
-			
-			put.addColumn(Bytes.toBytes(STATUS), null, Bytes.toBytes(StringUtil.isBlank(respStatus) ? RESP_STATUS : respStatus));
-			
-			table.put(put);
 		} catch(Exception e) {
 			logger.error("HbaseLogExecuter_log_error: ", e);
 		}
@@ -244,45 +206,5 @@ public class HbaseLogExecuter implements LogExecuter {
 
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
-	}
-
-	public String getZkQuorum() {
-		return zkQuorum;
-	}
-
-	public void setZkQuorum(String zkQuorum) {
-		this.zkQuorum = zkQuorum;
-	}
-
-	public String getZkPort() {
-		return zkPort;
-	}
-
-	public void setZkPort(String zkPort) {
-		this.zkPort = zkPort;
-	}
-
-	public String getZkRetry() {
-		return zkRetry;
-	}
-
-	public void setZkRetry(String zkRetry) {
-		this.zkRetry = zkRetry;
-	}
-
-	public String getHbaseRetryNum() {
-		return hbaseRetryNum;
-	}
-
-	public void setHbaseRetryNum(String hbaseRetryNum) {
-		this.hbaseRetryNum = hbaseRetryNum;
-	}
-
-	public String getHbasePause() {
-		return hbasePause;
-	}
-
-	public void setHbasePause(String hbasePause) {
-		this.hbasePause = hbasePause;
 	}
 }
