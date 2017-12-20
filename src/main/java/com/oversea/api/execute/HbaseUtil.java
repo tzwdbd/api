@@ -18,7 +18,7 @@ import org.nlpcn.commons.lang.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HbaseUtil {
+public class HbaseUtil implements HbaseBase {
 	
 	private static Logger logger = LoggerFactory.getLogger(HbaseUtil.class);
 	
@@ -34,6 +34,7 @@ public class HbaseUtil {
 	
 	private static ConcurrentHashMap<String, Table> tableMap = new ConcurrentHashMap<String, Table>();
 	
+	@Override
 	public void init() {
 		config = HBaseConfiguration.create();
 		config.set("hbase.zookeeper.quorum", zkQuorum);
@@ -72,6 +73,7 @@ public class HbaseUtil {
 		logger.error("HbaseUtil init");
 	}
 	
+	@Override
 	public void close() {
 		try {
 			for(String tableName : tableMap.keySet()) {
