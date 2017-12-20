@@ -28,9 +28,9 @@ public class HbaseUtil {
 	private String hbaseRetryNum;
 	private String hbasePause;
 
-	private ExecutorService executor;
-	private Configuration config;
-	private Connection conn;
+	private static ExecutorService executor;
+	private static Configuration config;
+	private static Connection conn;
 	
 	private static ConcurrentHashMap<String, Table> tableMap = new ConcurrentHashMap<String, Table>();
 	
@@ -102,12 +102,12 @@ public class HbaseUtil {
 			Table table = tableMap.get(tableName);
 			
 			if(table == null) {
-				if(this.conn == null || this.conn.isClosed() || this.conn.isAborted()) {
+				if(conn == null || conn.isClosed() || conn.isAborted()) {
 					logger.error("HbaseUtil recreate conn, tableName={}", tableName);
 					conn = ConnectionFactory.createConnection(config, executor);
 				}
 				
-				if(this.conn == null || this.conn.isClosed() || this.conn.isAborted()) {
+				if(conn == null || conn.isClosed() || conn.isAborted()) {
 					logger.error("HbaseUtil recreate conn fail, tableName={}", tableName);
 					return null;
 				}
