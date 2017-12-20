@@ -41,6 +41,7 @@ public class HbaseLogExecuter {
     		Executors.defaultThreadFactory(),
     		new ThreadPoolExecutor.DiscardOldestPolicy());
 	
+	private static final String METHOD = "method";
 	private static final String PLATFORM = "plat";
 	private static final String REQ = "req";
 	private static final String RESP = "resp";
@@ -139,6 +140,10 @@ public class HbaseLogExecuter {
 			if(table != null) {
 				String rowKey = getRowKey(userId, method);
 				Put put = new Put(rowKey.getBytes());
+				
+				if(StringUtil.isNotBlank(method)) {
+					put.addColumn(Bytes.toBytes(METHOD), null, Bytes.toBytes(method));
+				}
 				
 				String platform = requestParams.getProduct_id();
 				
