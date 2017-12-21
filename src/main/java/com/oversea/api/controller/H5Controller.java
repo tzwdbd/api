@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -22,10 +21,10 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.oversea.api.aide.ControlAider;
 import com.oversea.api.core.SystemOperationExecuter;
 import com.oversea.api.exception.RequestProcessInterruptException;
-import com.oversea.api.execute.LogProcessResponseExecuter;
-import com.oversea.api.util.ApiConstant;
+import com.oversea.api.execute.HbaseLogExecuter;
 import com.oversea.common.domain.Resources;
 import com.oversea.common.encode.ThreeDES;
+import com.oversea.common.enums.ResourcesType;
 import com.oversea.common.exception.OverseaException;
 import com.oversea.common.exception.ProcessStatusCode;
 import com.oversea.common.manager.ResourcesManager;
@@ -41,15 +40,12 @@ public class H5Controller {
 
     @Resource
     private SystemOperationExecuter systemOperationExecuter;
-
-    @Resource
-    private LogProcessResponseExecuter logProcessResponseExecuter;
-
     @Resource
     private ControlAider controlAider;
-    
     @Resource
     private ResourcesManager resourcesManager;
+    @Resource
+    private HbaseLogExecuter hbaseLogExecuter;
     
     /**手机客户端
      * @param request
@@ -78,8 +74,9 @@ public class H5Controller {
         	try{
         		requestData = URLDecoder.decode(requestData,"UTF-8");
         		sign        = URLDecoder.decode(sign,"UTF-8");
-        	}catch(Exception e){}
-        	
+        	}catch(Exception e){
+        		
+        	}
 
             allParams       = JSONUtil.json2MapFirstChildren(requestData,request.getParameter("requestData"));
             publicParams    = JSONUtil.json2MapFirstChildren(allParams.get("common"));
@@ -146,25 +143,12 @@ public class H5Controller {
             operationResponse.getResponsePublicParams().setStatus(ProcessStatusCode.getProcessStatusCodeByMessage(msg).getCode());
             operationResponse.getResponsePublicParams().setMemo(msg);
             operationResponse.getResponsePublicParams().setUser_id(String.valueOf(operationRequest.getUser_id()));
-
-            
-            
         }
         try {
             try {
                 if (operationRequest != null) {
-                	// String mongoEnv = System.getProperty("mongo.environment");
                 	// 记录操作日志
-                	Set<String> whiteList = ApiConstant.h5WhiteSet;
-                	Map<String, Resources> map = resourcesManager.getSaleResourceByMap("h5WhiteList");
-                	
-                	if(map.size() > 0) {
-                		whiteList = map.keySet();
-                	}
-                	
-                	if(whiteList.contains(operationRequest.getMethod())) {
-                	   logProcessResponseExecuter.log(operationRequest, operationResponse);
-                	}
+                	hbaseLogExecuter.log(HbaseLogExecuter.FROM_H5, operationRequest, operationResponse);
                 	
                     // step8 将回写内容转换成json格式
                     resultJson = controlAider.createResultJson(operationResponse);
@@ -175,9 +159,10 @@ public class H5Controller {
                     
                     String ua = operationRequest.getUa();
                     
-                    if(StringUtils.isNotEmpty(ua) && ua.toLowerCase().indexOf("micromessenger") > -1
+                    if(StringUtils.isNotEmpty(ua)
+                    		&& ua.toLowerCase().indexOf("micromessenger") > -1
                     		&& StringUtils.isNotEmpty(resultJson)) {
-                    	List<Resources> resourcesList = resourcesManager.getSaleResourceByType("domainUrl");
+                    	List<Resources> resourcesList = resourcesManager.getSaleResourceByType(ResourcesType.DOMAIN_URL_TYPE.getName());
                     	resultJson = resultJson.replaceAll(resourcesList.get(1).getResValue(), resourcesList.get(0).getResValue());
                     	resultJson = resultJson.replaceAll(resourcesList.get(3).getResValue(), resourcesList.get(2).getResValue());
                     }
@@ -192,7 +177,6 @@ public class H5Controller {
         } catch (Exception e) {
             log.error("给客户端返回请求是发生异常:", e);
         }
-
     }
     
     public static String getIpAddress(HttpServletRequest request) { 

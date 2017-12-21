@@ -14,6 +14,14 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
+        <repository>
+            <id>repo-snapshot</id>
+            <url>http://122.225.114.28:8085/artifactory/libs-snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
     </repositories>
     
 	<properties>
@@ -28,6 +36,17 @@
 		  <groupId>oversea</groupId>
 		  <artifactId>oversea-common</artifactId>
 		  <version>common-dubbo-20171219-07</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-client</artifactId>
+			<version>1.2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.8</version>
+>>>>>>> zoubf-hbase
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
