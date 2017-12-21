@@ -48,7 +48,7 @@
    		<property name="tableName" value="${hbase.api.log.tableName}" />
    	</bean>
    	
-   	<bean id="hbaseUtil" class="com.oversea.api.execute.HbaseUtil" init-method="init" destroy-method="close">
+   	<bean id="hbaseUtil" class="com.oversea.api.execute.HbaseUtil" destroy-method="close">
 		<property name="zkQuorum" value="${hbase.api.log.zkQuorum}" />
 		<property name="zkPort" value="${hbase.api.log.zkPort}" />
 		<property name="zkRetry" value="${hbase.api.log.zkRetry}" />

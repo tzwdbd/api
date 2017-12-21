@@ -1,9 +1,12 @@
 package com.oversea.api.execute;
 
 import java.util.Collection;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.ClusterStatus;
@@ -18,7 +21,7 @@ import org.nlpcn.commons.lang.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HbaseUtil implements HbaseBase {
+public class HbaseUtil {
 	
 	private static Logger logger = LoggerFactory.getLogger(HbaseUtil.class);
 	
@@ -28,42 +31,48 @@ public class HbaseUtil implements HbaseBase {
 	private String hbaseRetryNum;
 	private String hbasePause;
 
-	private static ExecutorService executor;
+	private static ExecutorService executor = new ThreadPoolExecutor(5, 10, 15L,
+			TimeUnit.SECONDS,
+    		new ArrayBlockingQueue<Runnable>(20000),
+    		Executors.defaultThreadFactory(),
+    		new ThreadPoolExecutor.DiscardOldestPolicy());
+	
 	private static Configuration config;
 	private static Connection conn;
 	
 	private static ConcurrentHashMap<String, Table> tableMap = new ConcurrentHashMap<String, Table>();
 	
-	@Override
 	public void init() {
-		config = HBaseConfiguration.create();
-		config.set("hbase.zookeeper.quorum", zkQuorum);
-		config.set("hbase.zookeeper.property.clientPort", zkPort);
-		config.set("hbase.client.retries.number", hbaseRetryNum);
-		config.set("hbase.client.pause", hbasePause);
-		config.set("zookeeper.recovery.retry", zkRetry);
-		
-		executor = Executors.newFixedThreadPool(5);
+		if(config == null) {
+			config = HBaseConfiguration.create();
+			config.set("hbase.zookeeper.quorum", zkQuorum);
+			config.set("hbase.zookeeper.property.clientPort", zkPort);
+			config.set("hbase.client.retries.number", hbaseRetryNum);
+			config.set("hbase.client.pause", hbasePause);
+			config.set("zookeeper.recovery.retry", zkRetry);
+		}
 		
 		try {
-			conn = ConnectionFactory.createConnection(config, executor);
-			
-			if(conn != null) {
-				HBaseAdmin hBaseAdmin = (HBaseAdmin) conn.getAdmin();
+			if(conn == null || conn.isClosed() || conn.isAborted()) {
+				conn = ConnectionFactory.createConnection(config, executor);
 				
-				if(hBaseAdmin != null) {
-					ClusterStatus clusterStatus = hBaseAdmin.getClusterStatus();
-			        
-			        if(clusterStatus != null) {
-			        	ServerName master = clusterStatus.getMaster();
-				        Collection<ServerName> servers = clusterStatus.getServers();
+				if(conn != null) {
+					HBaseAdmin hBaseAdmin = (HBaseAdmin) conn.getAdmin();
+					
+					if(hBaseAdmin != null) {
+						ClusterStatus clusterStatus = hBaseAdmin.getClusterStatus();
 				        
-				        logger.error("HbaseUtil Master host={}, port={} ", master.getHostname(), master.getPort());
-				        
-				        for(ServerName serverName : servers) {
-				        	logger.error("HbaseUtil Region host={}, port={} ", serverName.getHostname(), serverName.getPort());
+				        if(clusterStatus != null) {
+				        	ServerName master = clusterStatus.getMaster();
+					        Collection<ServerName> servers = clusterStatus.getServers();
+					        
+					        logger.error("HbaseUtil Master host={}, port={} ", master.getHostname(), master.getPort());
+					        
+					        for(ServerName serverName : servers) {
+					        	logger.error("HbaseUtil Region host={}, port={} ", serverName.getHostname(), serverName.getPort());
+					        }
 				        }
-			        }
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -73,7 +82,6 @@ public class HbaseUtil implements HbaseBase {
 		logger.error("HbaseUtil init");
 	}
 	
-	@Override
 	public void close() {
 		try {
 			for(String tableName : tableMap.keySet()) {
@@ -104,10 +112,7 @@ public class HbaseUtil implements HbaseBase {
 			Table table = tableMap.get(tableName);
 			
 			if(table == null) {
-				if(conn == null || conn.isClosed() || conn.isAborted()) {
-					logger.error("HbaseUtil recreate conn, tableName={}", tableName);
-					conn = ConnectionFactory.createConnection(config, executor);
-				}
+				this.init();
 				
 				if(conn == null || conn.isClosed() || conn.isAborted()) {
 					logger.error("HbaseUtil recreate conn fail, tableName={}", tableName);
