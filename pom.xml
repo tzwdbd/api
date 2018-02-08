@@ -35,7 +35,7 @@
 		<dependency>
 		  	<groupId>oversea</groupId>
 		  	<artifactId>oversea-common</artifactId>
-		  	<version>common-gps2-20180205-01</version>
+		  	<version>common-promotion-20180208-01</version>
 		</dependency>
 		<dependency>
     		<groupId>org.apache.hbase</groupId>
