@@ -54,7 +54,7 @@ public class SystemOperationExecuter {
         	throw new RequestProcessInterruptException(ProcessStatusCode.COOKIE_NOT_EXISTS,"本次操作 ["+operationType+"] 需要cookie信息 .");
         }
         
-        logger.error("SystemOperationExecuter: execute, operationType={},method={}", operationType, bean.getMethod());
+        logger.error("SystemOperationExecuter: execute, operationType={},method={},object={},rbp={}", operationType, bean.getMethod(), bean.getObject(), rbp);
         
         try{
         	return (ResponseBaseParams)bean.getMethod().invoke(bean.getObject(), rbp);
