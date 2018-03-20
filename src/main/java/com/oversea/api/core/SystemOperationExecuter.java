@@ -1,10 +1,9 @@
 package com.oversea.api.core;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.oversea.api.exception.RequestProcessInterruptException;
-import com.oversea.api.util.StackTraceUtil;
 import com.oversea.common.core.ServiceMethod;
 import com.oversea.common.exception.ProcessStatusCode;
 import com.oversea.common.request.RequestBaseParams;
@@ -18,7 +17,7 @@ import com.oversea.common.util.StringUtil;
  */
 public class SystemOperationExecuter {
 	
-	private Log log = LogFactory.getLog(SystemOperationExecuter.class);
+	private static Logger logger = LoggerFactory.getLogger(SystemOperationExecuter.class);
     
 	private OverSeaServiceScanner overSeaServiceScanner;
     
@@ -39,6 +38,8 @@ public class SystemOperationExecuter {
      * @throws RequestProcessInterruptException
      */
     public ResponseBaseParams execute(String operationType , RequestBaseParams rbp) throws RequestProcessInterruptException, Exception{
+    	logger.error("SystemOperationExecuter: execute, operationType={}", operationType);
+    	
         ServiceMethod bean = overSeaServiceScanner.getServiceByOperationType(operationType);
         if(bean == null){
             throw new RequestProcessInterruptException(ProcessStatusCode.PARAM_FORMAT_ERROR,"nvshenServiceScanner 未找到 ["+operationType+"] 相应的service内方法 .");
@@ -52,10 +53,13 @@ public class SystemOperationExecuter {
         if(bean.isNeedCookie() && StringUtil.isEmpty(rbp.getCookie())){
         	throw new RequestProcessInterruptException(ProcessStatusCode.COOKIE_NOT_EXISTS,"本次操作 ["+operationType+"] 需要cookie信息 .");
         }
+        
+        logger.error("SystemOperationExecuter: execute, operationType={},method={}", operationType, bean.getMethod());
+        
         try{
         	return (ResponseBaseParams)bean.getMethod().invoke(bean.getObject(), rbp);
         }catch(Exception e){
-        	log.error(StackTraceUtil.getStackTrace(e));
+        	logger.error("SystemOperationExecuter: error, ", e);
         	throw e;
         }
     }
